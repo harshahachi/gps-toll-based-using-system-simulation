@@ -1,0 +1,36 @@
+import random
+
+# Define toll booth locations
+toll_booths = [
+    {"name": "Toll Booth 1", "location": 20},  # Distance in kilometers
+    {"name": "Toll Booth 2", "location": 50},
+]
+
+# Define vehicle data
+vehicles = [
+    {"id": 1, "start_location": 0, "account": 100},
+    {"id": 2, "start_location": 0, "account": 50},
+]
+
+def calculate_toll(distance):
+  """Simulates toll calculation based on distance"""
+  return distance * 1  # Replace with your toll calculation logic (e.g., per kilometer rate)
+
+def simulate_trip(vehicle):
+  """Simulates a vehicle trip and toll deduction"""
+  current_location = vehicle["start_location"]
+  for booth in toll_booths:
+    if current_location >= booth["location"]:
+      toll = calculate_toll(booth["location"] - current_location)
+      if vehicle["account"] >= toll:
+        print(f"Vehicle {vehicle['id']} passed {booth['name']} at {current_location} km. Toll deducted: ${toll}")
+        vehicle["account"] -= toll
+      else:
+        print(f"Vehicle {vehicle['id']} has insufficient funds at {booth['name']}. Trip terminated.")
+        break
+    current_location = booth["location"]
+
+# Simulate trips for each vehicle
+for vehicle in vehicles:
+  simulate_trip(vehicle)
+  print(f"Vehicle {vehicle['id']} remaining balance: ${vehicle['account']}")
